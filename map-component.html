@@ -1,0 +1,51 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../google-map/google-map.html">
+
+<dom-module id="map-component">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      google-map {
+        height: 400px;
+      }
+    </style>
+    <google-map latitude=[[latitude]] longitude=[[longitude]] api-key="AIzaSyA3lpC78WC-xWGDlrxng8sxF4YLgMllumU" dragEvents=true>
+      <google-map-marker id="mark" latitude=[[latitude]] longitude=[[longitude]] draggable="true" click-events="true" on-google-map-marker-click="updatePosition"></google-map-marker>
+    </google-map>
+    <h1>Lat = [[latitude]]</h1>
+    <h1>Long = [[longitude]]</h1>
+  </template>
+
+  <script>
+    /**
+     * `map-component`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class MapComponent extends Polymer.Element {
+      static get is() { return 'map-component'; }
+      static get properties() {
+        return {
+          latitude: {
+            value: '40.405993',
+          },
+          longitude: {
+            value:'-3.839583'
+          }
+        };
+      }
+      updatePosition() {
+        this.latitude = this.$.mark.latitude;
+        this.longitude = this.$.mark.longitude;
+        
+      }
+    }    
+
+    window.customElements.define(MapComponent.is, MapComponent);
+  </script>
+</dom-module>
