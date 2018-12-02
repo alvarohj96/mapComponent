@@ -1,6 +1,6 @@
 # \<map-component\>
 
-This components gives the latitude and longitude of a mark on Google Maps
+This component gives the latitude and longitude of a mark on Google Maps
 
 
 ## Install the Polymer-CLI
