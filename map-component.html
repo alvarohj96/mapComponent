@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../google-map/google-map.html">
+<link rel="import" href="../google-map/google-map-search.html">
 
 <dom-module id="map-component">
   <template>
@@ -11,11 +12,21 @@
         height: 400px;
       }
     </style>
-    <google-map latitude=[[latitude]] longitude=[[longitude]] api-key="AIzaSyA3lpC78WC-xWGDlrxng8sxF4YLgMllumU" dragEvents=true>
-      <google-map-marker id="mark" latitude=[[latitude]] longitude=[[longitude]] draggable="true" click-events="true" on-google-map-marker-click="updatePosition"></google-map-marker>
+
+    <input type="text" value="{{search::input}}">
+
+    <google-map-search map="[[map]]" query="{{search}}" results="{{results}}"></google-map-search>
+
+    <google-map map="{{map}}" latitude={{latitude}} longitude={{longitude}} api-key="AIzaSyA3lpC78WC-xWGDlrxng8sxF4YLgMllumU" dragEvents=true>
+      <template is="dom-repeat" items="{{results}}" as="marker">
+          <google-map-marker latitude="[[marker.latitude]]" longitude="[[marker.longitude]]">
+            <h2>{{marker.name}}</h2>
+            <p>{{marker.formatted_address}}</p>
+            <p>Latitude: [[marker.latitude]]</p>
+            <p>Longitude: {{marker.longitude}}</p>
+          </google-map-marker>
+      </template>
     </google-map>
-    <h1>Lat = [[latitude]]</h1>
-    <h1>Long = [[longitude]]</h1>
   </template>
 
   <script>
@@ -31,18 +42,16 @@
       static get is() { return 'map-component'; }
       static get properties() {
         return {
+          search: {
+            value: 'Introduzca el lugar'
+          },
           latitude: {
-            value: '40.405993',
+            value: '40.405993'
           },
           longitude: {
             value:'-3.839583'
           }
         };
-      }
-      updatePosition() {
-        this.latitude = this.$.mark.latitude;
-        this.longitude = this.$.mark.longitude;
-        
       }
     }    
 
